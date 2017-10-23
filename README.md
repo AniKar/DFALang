@@ -9,8 +9,8 @@ An automaton *definition* in this language looks like this:
 ```
 A1 = DFA {
   S = 4
-  A = {a, b, c}
-  T = {(1,a,2), (1,b,3), (2,c,4), (3,b,1)}
+  A = {'a', 'b', 'c'}
+  T = {(1, 'a', 2), (1, 'b', 3), (2, 'c', 4), (3, 'b', 1)}
   F = {2, 4}
 }
 ```
@@ -23,14 +23,14 @@ or
 Accept "abc" with DFA {
   S = 4
   A = {a, b, c}
-  T = {(1,a,2), (1,b,3), (2,c,4), (3,b,1)}
+  T = {(1, 'a', 2), (1, 'b', 3), (2,'c', 4), (3, 'b', 1)}
   F = {2, 4}
 }
 ```
 
 You can also ask to *accept a string with several automata* at the same time:  <br />
 ```
-Accept "abc" with {A1, A2, A3}
+Accept "abc" with (A1, A2, A3)
 ```
 <br />
 
