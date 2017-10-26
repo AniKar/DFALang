@@ -1,3 +1,6 @@
+#!/usr/bin/python
+
+
 import Scanner
 from Scanner import Token as T
 
