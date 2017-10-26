@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # Deterministic finite automaton
 
 class Automaton:
