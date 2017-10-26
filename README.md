@@ -1,4 +1,4 @@
-# DFALang
+# Automata
 An interpreter of a simple language for working with Deterministic Finite Automata.
 
 ### Introduction
@@ -7,11 +7,11 @@ The language has a simple structure. It allows you to define Deterministic Finit
 An automaton *definition* in this language looks like this:
 
 ```
-A1 = DFA {
-  S = 4
-  A = {'a', 'b', 'c'}
-  T = {(1, 'a', 2), (1, 'b', 3), (2, 'c', 4), (3, 'b', 1)}
-  F = {2, 4}
+A1 = DFA { \
+  S = 4 \
+  A = {'a', 'b', 'c'} \
+  T = {(1, 'a', 2), (1, 'b', 3), (2, 'c', 4), (3, 'b', 1)} \
+  F = {2, 4} \
 }
 ```
 Ask to *accept a string* with this automaton: <br />
@@ -20,11 +20,11 @@ Accept "abc" with A1
 ```
 or
 ```
-Accept "abc" with DFA {
-  S = 4
-  A = {'a', 'b', 'c'}
-  T = {(1, 'a', 2), (1, 'b', 3), (2,'c', 4), (3, 'b', 1)}
-  F = {2, 4}
+Accept "abc" with DFA { \
+  S = 4 \
+  A = {'a', 'b', 'c'} \
+  T = {(1, 'a', 2), (1, 'b', 3), (2,'c', 4), (3, 'b', 1)} \
+  F = {2, 4} \
 }
 ```
 
