@@ -19,7 +19,7 @@ class Interpreter:
 
 if __name__ == '__main__':
 
-    input_file = "tests/DFA.txt"
+    input_file = "tests/script1"
     interpreter = Interpreter(input_file)
     interpreter.run()
     
