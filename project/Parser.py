@@ -115,7 +115,7 @@ class ComplexAccept:
             thread.join()
 
 
-#******************Parser******************#
+#****************************Parser******************************#
 # Parser is implemented with "predictive parsing" top-down method.
 class Parser:
     def __init__(self, file):
@@ -294,6 +294,9 @@ class Parser:
         while not self.__nextTokenIs(T.RCurlyBr):
             self.__match(T.Comma)
             tr = self.parseTransition()
+            if (tr[0], tr[1]) in transitions:
+                print("Warning: Non deterministic transition list definition! " \
+                      "Out of conflicting transitions the last one will be considered.")
             transitions[(tr[0], tr[1])] = tr[2]
         self.__match(T.RCurlyBr)
 
