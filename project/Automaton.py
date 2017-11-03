@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # Deterministic finite automaton
 
 class Automaton:
@@ -43,10 +41,8 @@ class Automaton:
 
     # check for correct automaton definition
     def check(self):
-        valid = self.__checkTransitions()
-        if valid:
-            valid = self.__checkAcceptStates()
-        return valid
+        return self.__checkTransitions() \
+           and self.__checkAcceptStates()
 
     # check for correct transition list definition
     def __checkTransitions(self):
@@ -57,22 +53,21 @@ class Automaton:
 
     # check for correctness of a single transition
     def __checkTransition(self, state1, input, state2):
-        return self.__valid_state(state1) and \
-               self.__valid_state(state2) and \
-               self.__valid_input(input)
+        return self.__validState(state1) \
+           and self.__validState(state2) \
+           and self.__validInput(input)
 
     # check for correct accept states definition
     def __checkAcceptStates(self):
         for s in self.accept_states:
-            if not self.__valid_state(s):
+            if not self.__validState(s):
                 return False
         return True
 
     # check for a valid state number
-    def __valid_state(self, s):
+    def __validState(self, s):
         return (s in range(1, self.state_count + 1))
 
     # check for a valid input
-    def __valid_input(self, input):
+    def __validInput(self, input):
         return input in self.alphabet
-        
