@@ -29,19 +29,24 @@ Accept "abc" with (A1, A2, A3)
 Լեզվի քերականությունը․ <br />
 
 ```
-Program        = {[NewLines] Module}.
-Module         = (DefModule | AcceptModule) NewLines.
-DefModule      = ID '=' Automaton.
-Automaton      = 'DFA' '{' States Alphabet Transitions FinalStates '}'.
-AcceptModule   = 'Accept' STRING 'with' (IDList | Automaton).
-States         = 'States'|'S' '=' NUMBER.
-Alphabet       = 'Alphabet'|'A' '=' LetterList.
-Transitions    = 'Transitions'|'T' '=' TransitionList.
-FinalStates    = 'FinalStates'|'F' '=' NumberList.
-LetterList     = '{' LETTER {',' LETTER} '}'.
-NumberList     = '{' NUMBER {',' NUMBER} '}'.
-IDList         = '{' ID {',' ID} '}'.
-TransitionList = '{' Transition {',' Transition} '}'.
-Transition     = '(' NUMBER ',' LETTER ',' NUMBER ')'.
-NewLines       = NL {NL}.
+Program           = {[NewLines] Module}.
+Module            = (DefModule | AcceptModule) NewLines.
+DefModule         = ID '=' Automaton.
+Automaton         = (Recognizer | Modifier)
+Recognizer        = 'Recognizer' '{' States Alphabet Transitions FinalStates '}'.
+Modifier          = 'Modifier' '{' States Alphabet ExtTransitions FinalStates '}'.
+AcceptModule      = 'Accept' STRING 'with' (IDList | Automaton).
+States            = 'States'|'S' '=' NUMBER.
+Alphabet          = 'Alphabet'|'A' '=' LetterList.
+Transitions       = 'Transitions'|'T' '=' TransitionList.
+ExtTransitions    = 'Transitions'|'T' '=' ExtTransitionList.
+FinalStates       = 'FinalStates'|'F' '=' NumberList.
+LetterList        = '{' LETTER {',' LETTER} '}'.
+NumberList        = '{' NUMBER {',' NUMBER} '}'.
+IDList            = '{' ID {',' ID} '}'.
+TransitionList    = '{' Transition {',' Transition} '}'.
+ExtTransitionList = '{' ExtTransition {',' ExtTransition} '}'.
+Transition        = '(' NUMBER ',' LETTER ',' NUMBER ')'.
+ExtTransition     = '(' NUMBER ',' LETTER ',' NUMBER ',' LETTER ')'.
+NewLines          = NL {NL}.
 ```
