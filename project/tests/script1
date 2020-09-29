@@ -1,5 +1,4 @@
 
-
 # Automaton definition
 A1 = DFA { \
   S = 3 \
@@ -11,6 +10,7 @@ A1 = DFA { \
 
 # Accept a string with the automaton.
 Accept "abc" With A1
+
 
 # Define the automaton right on the 'Accept' statement.
 Accept "abc" With DFA { \
@@ -28,4 +28,7 @@ A2 = DFA { \
 }
 
 # Accept the same string with multiple automata.
-Accept "abca" With (A1, A2)
+Accept "abca" With {A1, A2}
+
+# Render A1 and A2 automata
+Print {A1, A2}

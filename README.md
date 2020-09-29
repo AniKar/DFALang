@@ -30,8 +30,14 @@ Accept "abc" with DFA { \
 
 You can also ask to *accept a string with several automata* at the same time:  <br />
 ```
-Accept "abc" with (A1, A2, A3)
+Accept "abc" with {A1, A2, A3}
 ```
+
+Render (visualize) several automata with:  <br />
+```
+Print {A1, A2}
+```
+
 <br />
 
 ### The language grammar. <br />
@@ -41,6 +47,7 @@ Program        = {[NewLines] Module}.
 Module         = (DefModule | AcceptModule) NewLines.
 DefModule      = ID '=' Automaton.
 Automaton      = 'DFA' '{' States Alphabet Transitions FinalStates '}'.
+PrintModule    = 'Print' IDList
 AcceptModule   = 'Accept' STRING 'with' (IDList | Automaton).
 States         = 'States'|'S' '=' NUMBER.
 Alphabet       = 'Alphabet'|'A' '=' LetterList.
@@ -48,7 +55,7 @@ Transitions    = 'Transitions'|'T' '=' TransitionList.
 FinalStates    = 'FinalStates'|'F' '=' NumberList.
 LetterList     = '{' LETTER {',' LETTER} '}'.
 NumberList     = '{' NUMBER {',' NUMBER} '}'.
-IDList         = '{' ID {',' ID} '}'.
+IDList         = ID | '{' ID {',' ID} '}'.
 TransitionList = '{' Transition {',' Transition} '}'.
 Transition     = '(' NUMBER ',' LETTER ',' NUMBER ')'.
 NewLines       = NL {NL}.

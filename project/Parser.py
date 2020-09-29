@@ -1,6 +1,3 @@
-#!/usr/bin/python
-
-
 import Scanner
 from Scanner import Token as T
 
@@ -56,6 +53,25 @@ class DFADefiniton:
         else:
             raise RuntimeError("Invalid automaton definition " + self.name)
 
+class PrintDFAList:
+    def __init__(self, modules = []):
+        self.modules = modules
+
+    def addModule(self, module):
+        self.modules.append(module)
+
+    def execute(self, env):
+        for module in self.modules:
+            module.execute(env)
+
+class PrintDFA:
+    def __init__(self, dfa):
+        self.dfa = dfa
+
+    def execute(self, env):
+        automaton = self.dfa.evaluate(env)
+        automaton.show(self.dfa.name)
+
 # sequence of modules
 class ModuleSequence:
     def __init__(self, modules = []):
@@ -84,7 +100,7 @@ class SimpleAccept:
         else:
             print("String {} is not accepted with the automaton {}".format(self.string, self.dfa))
 
-#
+
 class AcceptStringThread(threading.Thread):
    def __init__(self, module, env):
        threading.Thread.__init__(self)
@@ -167,7 +183,6 @@ class Parser:
         return self.__module_seq
 
 
-    # parse the program (sequence of DFA 'definition' and 'accept' modules)
     def parse(self):
         if self.__nextTokenIs(T.Eof):
             return True
@@ -183,8 +198,11 @@ class Parser:
             # parse a single module
             if self.__nextTokenIs(T.Ident):
                 module = self.parseDefinition()
-            else:
+            elif self.__nextTokenIs(T.Accept):
                 module = self.parseStringAccept()
+            else:
+                assert(self.__nextTokenIs(T.Print))
+                module = self.parsePrint()
 
             self.__addModule(module)
             # modules must be separated by new lines
@@ -224,19 +242,19 @@ class Parser:
 
         # multiple automata given with an identifier list
         else:
-            self.__match(T.LRoundBr)
+            self.__match(T.LCurlyBr)
 
             module = ComplexAccept()
             dfa = Variable(self.__nextLexeme())
             self.__match(T.Ident)
             module.addModule(SimpleAccept(string, dfa))
 
-            while not self.__nextTokenIs(T.RRoundBr):
+            while not self.__nextTokenIs(T.RCurlyBr):
                 self.__match(T.Comma)
                 dfa = Variable(self.__nextLexeme())
                 self.__match(T.Ident)
                 module.addModule(SimpleAccept(string, dfa))
-            self.__match(T.RRoundBr)
+            self.__match(T.RCurlyBr)
 
         return module
 
@@ -252,7 +270,8 @@ class Parser:
 
         self.__match(T.RCurlyBr)
 
-        dfa = Automaton.Automaton(state_count, alphabet, transitions, accept_states)
+        dfa = Automaton.Automaton(state_count, alphabet,
+                                  transitions, accept_states)
         return DFA(dfa)
 
     # parse the state count
@@ -334,6 +353,28 @@ class Parser:
         self.__match(T.RCurlyBr)
 
         return accept_states
+
+    # parse Automaton printing command
+    def parsePrint(self):
+        self.__match(T.Print)
+        if self.__nextTokenIs(T.Ident):
+            dfa = Variable(self.__nextLexeme())
+            self.__match(T.Ident)
+            module = PrintDFA(dfa)
+        else:
+            self.__match(T.LCurlyBr)
+            module = PrintDFAList()
+            dfa = Variable(self.__nextLexeme())
+            self.__match(T.Ident)
+            module.addModule(PrintDFA(dfa))
+
+            while not self.__nextTokenIs(T.RCurlyBr):
+                self.__match(T.Comma)
+                dfa = Variable(self.__nextLexeme())
+                self.__match(T.Ident)
+                module.addModule(PrintDFA(dfa))
+            self.__match(T.RCurlyBr)
+        return module
 
     # parse a string
     def parseString(self):

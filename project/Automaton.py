@@ -1,7 +1,6 @@
-#!/usr/bin/python
+from graphviz import Digraph
 
 # Deterministic finite automaton
-
 class Automaton:
     def __init__(self, state_count, alphabet, transitions, accept_states):
         # take the start state be always 1
@@ -29,9 +28,21 @@ class Automaton:
 
     # accept a string from the initial state
     def acceptsString(self, input_str):
+        #self.show()
         return self.__acceptsStringFromState(self.start_state, input_str)
 
-    # automaton string representation
+    # output visualization of the automaton
+    def show(self, fname):
+        graph = Digraph()
+        for s in range(1, self.state_count+1):
+            node_shape = "doublecircle" if s in self.accept_states else "circle"
+            graph.node(str(s), shape=node_shape)
+        for s1_inp, s2 in self.transitions.items():
+            s1, inp = s1_inp[0], s1_inp[1]
+            graph.edge(str(s1), str(s2), label=inp)
+        graph.render("tests/output/" + fname, format='png', view=True)
+
+    # string representation of the automaton
     def __str__(self):
         s = "{\n" \
             " State count = "  + str(self.state_count) + "\n" \

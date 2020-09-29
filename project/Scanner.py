@@ -1,12 +1,5 @@
-#!/usr/bin/python
-
-
 import enum
-import functools
-import math
-import operator
 import re
-import sys
 
 # Types of lexemes
 class Token(enum.Enum):
@@ -24,16 +17,17 @@ class Token(enum.Enum):
     AcceptStates = 10
     Accept       = 11
     With         = 12
+    Print        = 13
 
     # symbols
-    LRoundBr     = 13
-    RRoundBr     = 14
-    LCurlyBr     = 15
-    RCurlyBr     = 16
-    Define       = 17
-    Comma        = 18
-    Eol          = 19
-    SplitLn      = 20
+    LRoundBr     = 14
+    RRoundBr     = 15
+    LCurlyBr     = 16
+    RCurlyBr     = 17
+    Define       = 18
+    Comma        = 19
+    Eol          = 20
+    SplitLn      = 21
 
 
 class Scanner:
@@ -49,7 +43,8 @@ class Scanner:
         'F'           : Token.AcceptStates,
         'FinalStates' : Token.AcceptStates,
         'Accept'      : Token.Accept,
-        'With'        : Token.With
+        'With'        : Token.With,
+        'Print'       : Token.Print
     }
     # symbols
     __symbols = {
