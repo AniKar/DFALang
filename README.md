@@ -60,3 +60,6 @@ TransitionList = '{' Transition {',' Transition} '}'.
 Transition     = '(' NUMBER ',' LETTER ',' NUMBER ')'.
 NewLines       = NL {NL}.
 ```
+
+### Parse an input script file e.g. as:  <br />
+Interpreter.py --input_file tests/script1 --output_dir tests/output
