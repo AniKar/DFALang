@@ -45,32 +45,13 @@ class DFADefiniton:
         self.name = name
         self.dfa = dfa
 
-    def execute(self, env):
+    def execute(self, env, out_dir = ''):
         automaton = self.dfa.evaluate(env)
         if automaton.check():
             env[self.name] = self.dfa
             print("Defined automaton " + self.name + " = " + str(automaton))
         else:
             raise RuntimeError("Invalid automaton definition " + self.name)
-
-class PrintDFAList:
-    def __init__(self, modules = []):
-        self.modules = modules
-
-    def addModule(self, module):
-        self.modules.append(module)
-
-    def execute(self, env):
-        for module in self.modules:
-            module.execute(env)
-
-class PrintDFA:
-    def __init__(self, dfa):
-        self.dfa = dfa
-
-    def execute(self, env):
-        automaton = self.dfa.evaluate(env)
-        automaton.show(self.dfa.name)
 
 # sequence of modules
 class ModuleSequence:
@@ -80,9 +61,21 @@ class ModuleSequence:
     def addModule(self, module):
         self.modules.append(module)
 
-    def execute(self, env):
+    def execute(self, env, out_dir = ''):
         for module in self.modules:
-            module.execute(env)
+            module.execute(env, out_dir)
+
+class PrintDFA:
+    def __init__(self, dfa):
+        self.dfa = dfa
+
+    def execute(self, env, out_dir = ''):
+        automaton = self.dfa.evaluate(env)
+        automaton.show(self.dfa.name, out_dir)
+
+class PrintDFAList(ModuleSequence):
+    def __init__(self, modules = []):
+        ModuleSequence.__init__(self, modules)
 
 # accept statement with single automaton
 class SimpleAccept:
@@ -90,7 +83,7 @@ class SimpleAccept:
         self.string = string
         self.dfa = dfa
 
-    def execute(self, env):
+    def execute(self, env, out_dir = ''):
         automaton = self.dfa.evaluate(env)
         if not automaton.check():
             raise RuntimeError("Invalid automaton definition")
@@ -118,7 +111,7 @@ class ComplexAccept:
     def addModule(self, module):
         self.simple_modules.append(module)
 
-    def execute(self, env):
+    def execute(self, env, out_dir = ''):
         # execute the simple accept statements in parallel
         threads = []
         for module in self.simple_modules:

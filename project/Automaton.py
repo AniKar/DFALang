@@ -32,7 +32,7 @@ class Automaton:
         return self.__acceptsStringFromState(self.start_state, input_str)
 
     # output visualization of the automaton
-    def show(self, fname):
+    def show(self, fname, out_dir = ''):
         graph = Digraph()
         for s in range(1, self.state_count+1):
             node_shape = "doublecircle" if s in self.accept_states else "circle"
@@ -40,7 +40,7 @@ class Automaton:
         for s1_inp, s2 in self.transitions.items():
             s1, inp = s1_inp[0], s1_inp[1]
             graph.edge(str(s1), str(s2), label=inp)
-        graph.render("tests/output/" + fname, format='png', view=True)
+        graph.render(out_dir + '/' + fname, format='png', view=False)
 
     # string representation of the automaton
     def __str__(self):
