@@ -1,4 +1,5 @@
 from graphviz import Digraph
+import os
 
 # Deterministic finite automaton
 class Automaton:
@@ -40,7 +41,7 @@ class Automaton:
         for s1_inp, s2 in self.transitions.items():
             s1, inp = s1_inp[0], s1_inp[1]
             graph.edge(str(s1), str(s2), label=inp)
-        graph.render(out_dir + '/' + fname, format='png', view=False)
+        graph.render(os.path.join(out_dir, fname), format='png', view=False)
 
     # string representation of the automaton
     def __str__(self):
