@@ -1,5 +1,5 @@
 # Automata
-An interpreter of a simple language for working with Deterministic Finite Automata.
+An interpreter of a compact language for working with Deterministic Finite Automata.
 
 ### Introduction
 The language has a simple structure. It allows you to define Deterministic Finite Automata and ask to accept strings by them.
@@ -39,9 +39,7 @@ Print {A1, A2}
 ```
 
 <br />
-
 ### The language grammar. <br />
-
 ```
 Program        = {[NewLines] Module}.
 Module         = (DefModule | AcceptModule) NewLines.
@@ -61,5 +59,5 @@ Transition     = '(' NUMBER ',' LETTER ',' NUMBER ')'.
 NewLines       = NL {NL}.
 ```
 
-### Parse an input script file e.g. as:  <br />
+### Parse an input script file as:  <br />
 python Interpreter.py --input_file tests/script1 --output_dir tests/output
