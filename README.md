@@ -1,4 +1,4 @@
-# Automata
+# DFALang
 An interpreter of a compact language for working with Deterministic Finite Automata.
 
 ### Introduction
